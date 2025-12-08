@@ -6,11 +6,82 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>487</width>
-    <height>558</height>
+    <width>590</width>
+    <height>844</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="ctkCollapsibleButton" name="CollapsibleButton">
+     <property name="text">
+      <string>CollapsibleButton</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_6">
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Select Opacity Percentage:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="spinBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QPushButton" name="opacitypushButton">
+        <property name="text">
+         <string>Set Opacity</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Robot Names:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="qMRMLNodeComboBox" name="robotcomboBox">
+        <property name="nodeTypes">
+         <stringlist notr="true">
+          <string>vtkMRMLROS2RobotNode</string>
+         </stringlist>
+        </property>
+        <property name="hideChildNodeTypes">
+         <stringlist notr="true"/>
+        </property>
+        <property name="interactionNodeSingletonTag">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="ctkColorPickerButton" name="robotColorButton"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Change Robot Colour:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <widget class="ctkCollapsibleButton" name="robotCollapsibleButton">
      <property name="text">
@@ -155,6 +226,16 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>ctkColorPickerButton</class>
+   <extends>QPushButton</extends>
+   <header>ctkColorPickerButton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qMRMLNodeComboBox</class>
+   <extends>QWidget</extends>
+   <header>qMRMLNodeComboBox.h</header>
+  </customwidget>
+  <customwidget>
    <class>qMRMLWidget</class>
    <extends>QWidget</extends>
    <header>qMRMLWidget.h</header>
@@ -162,5 +243,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>RoboDrag</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>robotcomboBox</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>531</x>
+     <y>762</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>540</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

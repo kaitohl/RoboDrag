@@ -177,7 +177,9 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self.ui.streamstartbutton.connect("clicked(bool)", self.onstreamstartbutton)
         self.ui.streamstopbutton.connect("clicked(bool)", self.onstreamstopbutton)
         self.ui.ikpushButton.connect("clicked(bool)", self.onikbutton)
-
+        self.ui.opacitypushButton.connect("clicked(bool)", self.onopacitybutton)
+        self.ui.robotColorButton.connect("colorChanged(QColor)", self.onRobotColorChanged)
+        
         # Make sure parameter node is initialized (needed for module reload)
         self.initializeParameterNode()
 
@@ -310,6 +312,19 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     
     def onikbutton(self) -> None:
         self.logic.compute_ik_once(self.fromtransform.GetName(), self.totransform.GetName())
+        
+    def onopacitybutton(self) -> None:
+        opacity = self.ui.spinBox.value / 100.0
+        robot = self.ui.robotcomboBox.currentNode()
+        self.logic.setopacity(robot, opacity)
+        
+    def onRobotColorChanged(self) -> None:
+
+        # Get currently selected robot from your qMRMLNodeComboBox
+        robotNode = self.ui.robotcomboBox.currentNode()  # or self.ui.comboBox.currentNode()
+        color = self.ui.robotColorButton.color
+        self.logic.setRobotColor(robotNode, color)
+        
 
 #
 # RoboDragLogic
@@ -676,6 +691,29 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
         self.obsTag  = fromNode.AddObserver(eventId, self.callback)
 
         return self.obsTag
+    
+    def setopacity(self, robotmodel, opacity):
+        
+        numModels = robotmodel.GetNumberOfNodeReferences("model")  
+
+        for i in range(numModels):  
+            modelNode = robotmodel.GetNthNodeReference("model", i)  
+            displayNode = modelNode.GetDisplayNode()  
+            if displayNode:  
+                displayNode.SetOpacity(opacity)
+                
+    def setRobotColor(self, robotNode, color):
+
+        numModels = robotNode.GetNumberOfNodeReferences("model")  
+
+        for i in range(numModels):  
+            modelNode = robotNode.GetNthNodeReference("model", i)  
+            displayNode = modelNode.GetDisplayNode()  
+            if displayNode:  
+                r = color.red() / 255.0
+                g = color.green() / 255.0
+                b = color.blue() / 255.0
+                displayNode.SetColor(r, g, b)
     
     
     
