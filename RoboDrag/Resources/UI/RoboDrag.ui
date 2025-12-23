@@ -132,95 +132,38 @@
    </item>
    <item>
     <widget class="ctkCollapsibleButton" name="jointCollapsibleButton">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="text">
       <string>Joint Angles</string>
      </property>
+     <property name="collapsed">
+      <bool>false</bool>
+     </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="1">
-       <widget class="QSlider" name="j1slider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <widget class="QScrollArea" name="jointScrollArea">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="jointScrollContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>532</width>
+           <height>85</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout_5"/>
+        </widget>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QSlider" name="j2slider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSlider" name="j3slider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSlider" name="j4slider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QSlider" name="j5slider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QSlider" name="j6slider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="j1label">
-        <property name="text">
-         <string> </string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="j2label">
-        <property name="text">
-         <string> </string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="j3label">
-        <property name="text">
-         <string> </string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="j4label">
-        <property name="text">
-         <string> </string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="j5label">
-        <property name="text">
-         <string> </string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="j6label">
-        <property name="text">
-         <string> </string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
        <widget class="QPushButton" name="zeropushButton">
         <property name="text">
          <string>Home</string>

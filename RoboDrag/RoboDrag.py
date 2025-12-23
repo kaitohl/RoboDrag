@@ -3,6 +3,7 @@ import os, time
 from typing import Annotated, Optional
 import xml.etree.ElementTree as ET
 import math
+import qt
 
 import vtk
 
@@ -186,12 +187,10 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self.ui.opacitypushButton.connect("clicked(bool)", self.onopacitybutton)
         self.ui.robotColorButton.connect("colorChanged(QColor)", self.onRobotColorChanged)
         self.ui.zeropushButton.connect("clicked(bool)", self.onzerobutton)
-        self.ui.j1slider.connect("valueChanged(int)", lambda v: self.onJointSliderChanged(0, v))
-        self.ui.j2slider.connect("valueChanged(int)", lambda v: self.onJointSliderChanged(1, v))
-        self.ui.j3slider.connect("valueChanged(int)", lambda v: self.onJointSliderChanged(2, v))
-        self.ui.j4slider.connect("valueChanged(int)", lambda v: self.onJointSliderChanged(3, v))
-        self.ui.j5slider.connect("valueChanged(int)", lambda v: self.onJointSliderChanged(4, v))
-        self.ui.j6slider.connect("valueChanged(int)", lambda v: self.onJointSliderChanged(5, v))
+        
+        # Set joint collapsible button to be collapsed and disabled initially
+        self.ui.jointCollapsibleButton.collapsed = True
+        self.ui.jointCollapsibleButton.enabled = False
 
         
         # Make sure parameter node is initialized (needed for module reload)
@@ -305,42 +304,56 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         ikgroup = self.ui.grouplineEdit.text
         self.robot = self.logic.setupikforRobot(group=ikgroup, robotNode=robotNode, fromtransformname=self.fromtransform.GetName(), totransformname=self.totransform.GetName())
 
-        pnode = robotNode.GetNthNodeReference("parameter", 0)  # vtkMRMLROS2ParameterNode
+        # Parse URDF to get joint names
+        # Get URDF XML from robot parameter node
+        pnode = robotNode.GetNthNodeReference("parameter", 0)
         urdf_xml = pnode.GetParameterAsString("robot_description")
         
-        
+        # Parse joint names
         joint_names = self.logic.parse_joint_names_from_urdf(urdf_xml)
-        print("URDF joints:", joint_names)
-
-        # Pick the first 6 (or however many sliders you have)
-        joint_names = joint_names[:6]
-
-        labels = [
-            self.ui.j1label,
-            self.ui.j2label,
-            self.ui.j3label,
-            self.ui.j4label,
-            self.ui.j5label,
-            self.ui.j6label,
-        ]
-
-        for i, lbl in enumerate(labels):
-            if i < len(joint_names):
-                lbl.setText(joint_names[i])
-            else:
-                lbl.setText(f"Joint {i+1}")
-        
         limits = self.logic.parse_joint_limits_from_urdf(urdf_xml)
-        print(f"Parsed joint limits: {limits}")
-        sliders = [
-        self.ui.j1slider,
-        self.ui.j2slider,
-        self.ui.j3slider,
-        self.ui.j4slider,
-        self.ui.j5slider,
-        self.ui.j6slider,
-        ]
-        self.logic.setJointSlidersFromUrdfLimits(limits,sliders)
+
+        self.ui.jointCollapsibleButton.collapsed = False        
+        self.ui.jointCollapsibleButton.enabled = True
+        
+        container = self.ui.jointScrollContents.layout()
+        
+        if container is not None:
+            # Clear existing widgets
+            while container.count():
+                item = container.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+
+            # Create sliders dynamically based on joint names
+            for i, joint_name in enumerate(joint_names):
+                joint_label = qt.QLabel(joint_name)
+                joint_slider = qt.QSlider(qt.Qt.Horizontal)
+
+                # Apply limits from URDF (convert radians to degrees)
+                lo_hi = limits.get(joint_name)
+                if lo_hi:
+                    lo_deg = int(round(math.degrees(lo_hi[0])))
+                    hi_deg = int(round(math.degrees(lo_hi[1])))
+                    if lo_deg > hi_deg:
+                        lo_deg, hi_deg = hi_deg, lo_deg
+                else:
+                    lo_deg, hi_deg = -180, 180
+
+                joint_slider.setMinimum(lo_deg)
+                joint_slider.setMaximum(hi_deg)
+                joint_slider.setValue(0)
+                joint_slider.setTickInterval(10)
+                joint_slider.setTickPosition(qt.QSlider.TicksBelow)
+
+                # Connect slider change to handler
+                joint_slider.valueChanged.connect(lambda value, idx=i: self.onJointSliderChanged(idx, value))
+
+                # Add to layout
+                container.addWidget(joint_label)
+                container.addWidget(joint_slider)
+        
          
     def onstreamstartbutton(self) -> None:
         ee = self.ui.eelineEdit.text
@@ -387,23 +400,30 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         print(f"All joint values (rad): {[f'{j:.4f}' for j in self.jointPositionsRad]}")
         
     def onzerobutton(self) -> None:
-        
-        sliders = [
-        self.ui.j1slider,
-        self.ui.j2slider,
-        self.ui.j3slider,
-        self.ui.j4slider,
-        self.ui.j5slider,
-        self.ui.j6slider,
-        ]
+        print("Resetting joint sliders to zero.")
+
+        container = self.ui.jointScrollContents.layout()
+        if container is None:
+            return
+
+        sliders = []
+        for i in range(container.count()):
+            widget = container.itemAt(i).widget()
+            if isinstance(widget, qt.QSlider):
+                sliders.append(widget)
+
+        if not sliders:
+            return
 
         for s in sliders:
             s.blockSignals(True)
             s.setValue(0)
             s.blockSignals(False)
-            
-        self.jointPositionsRad = [0.0] * 6
-        # publish zero positions
+
+        # Reset stored joint positions to match slider count
+        self.jointPositionsRad = [0.0] * len(sliders)
+
+        # Publish zero positions
         if self.logic is not None and self.logic.joint_state_publisher is not None:
             self.logic._publish_joint_state(self.jointPositionsRad)
 
