@@ -6,211 +6,242 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>576</width>
-    <height>907</height>
+    <width>580</width>
+    <height>1162</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="ctkCollapsibleButton" name="CollapsibleButton">
-     <property name="text">
-      <string>Robot Appearance </string>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <layout class="QFormLayout" name="formLayout_6">
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Select Opacity Percentage:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="spinBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QPushButton" name="opacitypushButton">
-        <property name="text">
-         <string>Set Opacity</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Robot Names:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="qMRMLNodeComboBox" name="robotcomboBox">
-        <property name="nodeTypes">
-         <stringlist notr="true">
-          <string>vtkMRMLROS2RobotNode</string>
-         </stringlist>
-        </property>
-        <property name="hideChildNodeTypes">
-         <stringlist notr="true"/>
-        </property>
-        <property name="interactionNodeSingletonTag">
-         <string notr="true"/>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="ctkColorPickerButton" name="robotColorButton"/>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Change Robot Colour:</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="ctkCollapsibleButton" name="robotCollapsibleButton">
-     <property name="text">
-      <string>Setup IK</string>
+     <property name="currentIndex">
+      <number>2</number>
      </property>
-     <layout class="QFormLayout" name="formLayout_2">
-      <item row="4" column="1">
-       <widget class="QPushButton" name="loadpushbutton">
-        <property name="text">
-         <string>Load</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="grouplineEdit"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="grouplabel">
-        <property name="text">
-         <string>Planning Group Name:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="robotnamelabel">
-        <property name="text">
-         <string>IK Robot Name:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="qMRMLNodeComboBox" name="ikrobotcombobox">
-        <property name="nodeTypes">
-         <stringlist notr="true">
-          <string>vtkMRMLROS2RobotNode</string>
-         </stringlist>
-        </property>
-        <property name="hideChildNodeTypes">
-         <stringlist notr="true"/>
-        </property>
-        <property name="interactionNodeSingletonTag">
-         <string notr="true"/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="ctkCollapsibleButton" name="jointCollapsibleButton">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="text">
-      <string>Joint Angles</string>
-     </property>
-     <property name="collapsed">
-      <bool>false</bool>
-     </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="1">
-       <widget class="QScrollArea" name="jointScrollArea">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="jointScrollContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>532</width>
-           <height>85</height>
-          </rect>
+     <widget class="QWidget" name="loadtab">
+      <property name="contextMenuPolicy">
+       <enum>Qt::PreventContextMenu</enum>
+      </property>
+      <attribute name="title">
+       <string>Load Robot</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="robotnamelabel">
+         <property name="text">
+          <string>Robot Name:</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_5"/>
         </widget>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="zeropushButton">
-        <property name="text">
-         <string>Home</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="ctkCollapsibleButton" name="outputsCollapsibleButton">
-     <property name="text">
-      <string>Streming</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout_4">
-      <item row="0" column="0">
-       <widget class="QLabel" name="eelabel">
-        <property name="text">
-         <string>End Effector Name:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="eelineEdit"/>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="streamstartbutton">
-        <property name="text">
-         <string>Start Streaming</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="streamstopbutton">
-        <property name="text">
-         <string>Stop Streaming</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QPushButton" name="ikpushButton">
-        <property name="text">
-         <string>IK Request</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+       </item>
+       <item row="0" column="1">
+        <widget class="qMRMLNodeComboBox" name="ikrobotcombobox">
+         <property name="nodeTypes">
+          <stringlist notr="true">
+           <string>vtkMRMLROS2RobotNode</string>
+          </stringlist>
+         </property>
+         <property name="hideChildNodeTypes">
+          <stringlist notr="true"/>
+         </property>
+         <property name="interactionNodeSingletonTag">
+          <string notr="true"/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="loadpushbutton">
+         <property name="text">
+          <string>Load</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="ctkCollapsibleButton" name="appCollapsibleButton">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Robot Appearance </string>
+         </property>
+         <property name="collapsed">
+          <bool>false</bool>
+         </property>
+         <layout class="QFormLayout" name="formLayout_6">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Robot Names:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="qMRMLNodeComboBox" name="robotcomboBox">
+            <property name="nodeTypes">
+             <stringlist notr="true">
+              <string>vtkMRMLROS2RobotNode</string>
+             </stringlist>
+            </property>
+            <property name="hideChildNodeTypes">
+             <stringlist notr="true"/>
+            </property>
+            <property name="interactionNodeSingletonTag">
+             <string notr="true"/>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Select Opacity Percentage:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="spinBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QPushButton" name="opacitypushButton">
+            <property name="text">
+             <string>Set Opacity</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Change Robot Colour:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="ctkColorPickerButton" name="robotColorButton"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Jointtab">
+      <attribute name="title">
+       <string>Joint Control</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="zeropushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Home</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="controltab">
+      <attribute name="title">
+       <string>3D Control</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="streamstartbutton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Start Streaming</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="streamstopbutton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Stop Streaming</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Use Move Group</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="ctkCollapsibleButton" name="moveCollapsibleButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Move Group</string>
+         </property>
+         <property name="collapsed">
+          <bool>true</bool>
+         </property>
+         <layout class="QFormLayout" name="formLayout_4">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="moveittab">
+      <attribute name="title">
+       <string>Trajectory</string>
+      </attribute>
+     </widget>
     </widget>
    </item>
    <item>
@@ -310,8 +341,8 @@
      <y>762</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>75</y>
+     <x>550</x>
+     <y>169</y>
     </hint>
    </hints>
   </connection>
@@ -326,8 +357,8 @@
      <y>814</y>
     </hint>
     <hint type="destinationlabel">
-     <x>347</x>
-     <y>281</y>
+     <x>451</x>
+     <y>67</y>
     </hint>
    </hints>
   </connection>
