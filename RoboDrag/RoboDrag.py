@@ -322,7 +322,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             self.robot = robotNode
             self.rootlink = alllink[0] 
             self.tiplink = alllink[-1]
-            self.ghosttiplink =  "ghost_" + self.tiplink
+            self.ghosttiplink =  self.tiplink + "_model_ghost"
             # Print tip link and ghost tip link
             print(f"Tip Link: {self.tiplink}, Ghost Tip Link: {self.ghosttiplink}")
 
@@ -461,7 +461,8 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # publish all joint values
         if self.logic is not None and self.logic.joint_state_publisher is not None:
-            self.logic._publish_joint_state(self.jointPositionsRad)
+            # self.logic._publish_joint_state(self.jointPositionsRad)
+            self.robot.ApplyGhostJoints(self.jointPositionsRad)
         
         print(f"All joint values (rad): {[f'{j:.4f}' for j in self.jointPositionsRad]}")
     
@@ -516,7 +517,8 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # Publish zero positions once at the end
         if self.logic is not None and self.logic.joint_state_publisher is not None:
-            self.logic._publish_joint_state(self.jointPositionsRad)
+            # self.logic._publish_joint_state(self.jointPositionsRad)
+            self.robot.ApplyGhostJoints(self.jointPositionsRad)
 
     def onMoveGroupToggled(self, toggled: bool) -> None:
         if toggled:
@@ -576,7 +578,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             # doesn't jump to (0,0,0) causing the robot to fold up.
             try:
                 # Use your logic helper to find the transform node for the tip link
-                tip_transform_node = self.logic.findRobotTransforms(self.ghosttiplink)
+                tip_transform_node = self.logic.findRobotTransforms(self.ghosttiplink, ghost=True)
                 
                 if tip_transform_node:
                     # 1. Get the matrix of the tip in World coordinates
@@ -759,13 +761,17 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
         print(f"Attached '{probeTransformName}' under leaf transform '{leaf.GetName()}'")
         return dict(leafTransform=leaf, probeTransform=probeT)
     
-    def findRobotTransforms(self, link_name):
+    def findRobotTransforms(self, link_name, ghost=False):
         """
         Locates the Slicer Transform node for a given link by looking for 
         the visual model and getting its parent.
         """
         # Construct expected model name
         model_name = f"{link_name}_model"
+        
+        if ghost:
+            model_name = link_name
+
         
         # Find model node, if exsits, get its parent transform
         model_node = slicer.util.getNode(model_name)
@@ -880,7 +886,8 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
                     data = [float(x) for x in result_str.split(",")]
                     print(f"[IK] Solution found: {data}")
                     self.last_ik_solution = data
-                    self._publish_joint_state(data)
+                    # self._publish_joint_state(data)
+                    robotmodel.ApplyGhostJoints(data)
                     return data
                 except ValueError as e:
                     print(f"[IK] Failed to parse solution: {e}")
