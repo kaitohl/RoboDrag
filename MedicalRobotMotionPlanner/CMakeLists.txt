@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-set(MODULE_NAME RoboDrag)
+set(MODULE_NAME MedicalRobotMotionPlanner)
 
 #-----------------------------------------------------------------------------
 set(MODULE_PYTHON_SCRIPTS

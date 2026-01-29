@@ -27,18 +27,18 @@ from slicer import vtkMRMLScalarVolumeNode
 
 
 #
-# RoboDrag
+# MedicalRobotMotionPlanner
 #
 
 
-class RoboDrag(ScriptedLoadableModule):
+class MedicalRobotMotionPlanner(ScriptedLoadableModule):
     """Uses ScriptedLoadableModule base class, available at:
     https://github.com/Slicer/Slicer/blob/main/Base/Python/slicer/ScriptedLoadableModule.py
     """
 
     def __init__(self, parent):
         ScriptedLoadableModule.__init__(self, parent)
-        self.parent.title = _("RoboDrag")  # TODO: make this more human readable by adding spaces
+        self.parent.title = _("MedicalRobotMotionPlanner")  # TODO: make this more human readable by adding spaces
         # TODO: set categories (folders where the module shows up in the module selector)
         self.parent.categories = [translate("qSlicerAbstractCoreModule", "Examples")]
         self.parent.dependencies = []  # TODO: add here list of module names that this module requires
@@ -47,7 +47,7 @@ class RoboDrag(ScriptedLoadableModule):
         # _() function marks text as translatable to other languages
         self.parent.helpText = _("""
 This is an example of scripted loadable module bundled in an extension.
-See more information in <a href="https://github.com/organization/projectname#RoboDrag">module documentation</a>.
+See more information in <a href="https://github.com/organization/projectname#MedicalRobotMotionPlanner">module documentation</a>.
 """)
         # TODO: replace with organization, grant and thanks
         self.parent.acknowledgementText = _("""
@@ -76,46 +76,46 @@ def registerSampleData():
     # To ensure that the source code repository remains small (can be downloaded and installed quickly)
     # it is recommended to store data sets that are larger than a few MB in a Github release.
 
-    # RoboDrag1
+    # MedicalRobotMotionPlanner1
     SampleData.SampleDataLogic.registerCustomSampleDataSource(
         # Category and sample name displayed in Sample Data module
-        category="RoboDrag",
-        sampleName="RoboDrag1",
+        category="MedicalRobotMotionPlanner",
+        sampleName="MedicalRobotMotionPlanner1",
         # Thumbnail should have size of approximately 260x280 pixels and stored in Resources/Icons folder.
         # It can be created by Screen Capture module, "Capture all views" option enabled, "Number of images" set to "Single".
-        thumbnailFileName=os.path.join(iconsPath, "RoboDrag1.png"),
+        thumbnailFileName=os.path.join(iconsPath, "MedicalRobotMotionPlanner1.png"),
         # Download URL and target file name
         uris="https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/998cb522173839c78657f4bc0ea907cea09fd04e44601f17c82ea27927937b95",
-        fileNames="RoboDrag1.nrrd",
+        fileNames="MedicalRobotMotionPlanner1.nrrd",
         # Checksum to ensure file integrity. Can be computed by this command:
         #  import hashlib; print(hashlib.sha256(open(filename, "rb").read()).hexdigest())
         checksums="SHA256:998cb522173839c78657f4bc0ea907cea09fd04e44601f17c82ea27927937b95",
         # This node name will be used when the data set is loaded
-        nodeNames="RoboDrag1",
+        nodeNames="MedicalRobotMotionPlanner1",
     )
 
-    # RoboDrag2
+    # MedicalRobotMotionPlanner2
     SampleData.SampleDataLogic.registerCustomSampleDataSource(
         # Category and sample name displayed in Sample Data module
-        category="RoboDrag",
-        sampleName="RoboDrag2",
-        thumbnailFileName=os.path.join(iconsPath, "RoboDrag2.png"),
+        category="MedicalRobotMotionPlanner",
+        sampleName="MedicalRobotMotionPlanner2",
+        thumbnailFileName=os.path.join(iconsPath, "MedicalRobotMotionPlanner2.png"),
         # Download URL and target file name
         uris="https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/1a64f3f422eb3d1c9b093d1a18da354b13bcf307907c66317e2463ee530b7a97",
-        fileNames="RoboDrag2.nrrd",
+        fileNames="MedicalRobotMotionPlanner2.nrrd",
         checksums="SHA256:1a64f3f422eb3d1c9b093d1a18da354b13bcf307907c66317e2463ee530b7a97",
         # This node name will be used when the data set is loaded
-        nodeNames="RoboDrag2",
+        nodeNames="MedicalRobotMotionPlanner2",
     )
 
 
 #
-# RoboDragParameterNode
+# MedicalRobotMotionPlannerParameterNode
 #
 
 
 @parameterNodeWrapper
-class RoboDragParameterNode:
+class MedicalRobotMotionPlannerParameterNode:
     """
     The parameters needed by module.
 
@@ -134,11 +134,11 @@ class RoboDragParameterNode:
 
 
 #
-# RoboDragWidget
+# MedicalRobotMotionPlannerWidget
 #
 
 
-class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
+class MedicalRobotMotionPlannerWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     """Uses ScriptedLoadableModuleWidget base class, available at:
     https://github.com/Slicer/Slicer/blob/main/Base/Python/slicer/ScriptedLoadableModule.py
     """
@@ -169,7 +169,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # Load widget from .ui file (created by Qt Designer).
         # Additional widgets can be instantiated manually and added to self.layout.
-        uiWidget = slicer.util.loadUI(self.resourcePath("UI/RoboDrag.ui"))
+        uiWidget = slicer.util.loadUI(self.resourcePath("UI/MedicalRobotMotionPlanner.ui"))
         self.layout.addWidget(uiWidget)
         self.ui = slicer.util.childWidgetVariables(uiWidget)
 
@@ -180,7 +180,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # Create logic class. Logic implements all computations that should be possible to run
         # in batch mode, without a graphical user interface.
-        self.logic = RoboDragLogic()
+        self.logic = MedicalRobotMotionPlannerLogic()
 
         # Connections
 
@@ -222,6 +222,21 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         if self.logic:
             self.logic.removeObserver()
         self.removeObservers()
+        
+        # Remove probe sphere and transform
+        try:
+            probe_transform = slicer.util.getNode("ProbeSphere_Transform")
+            if probe_transform:
+                slicer.mrmlScene.RemoveNode(probe_transform)
+        except:
+            pass
+        
+        try:
+            probe_model = slicer.util.getNode("ProbeSphere")
+            if probe_model:
+                slicer.mrmlScene.RemoveNode(probe_model)
+        except:
+            pass
 
     def enter(self) -> None:
         """Called each time the user opens this module."""
@@ -263,7 +278,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             if firstVolumeNode:
                 self._parameterNode.inputVolume = firstVolumeNode
 
-    def setParameterNode(self, inputParameterNode: Optional[RoboDragParameterNode]) -> None:
+    def setParameterNode(self, inputParameterNode: Optional[MedicalRobotMotionPlannerParameterNode]) -> None:
         """
         Set and observe parameter node.
         Observation is needed because when the parameter node is changed then the GUI must be updated immediately.
@@ -302,10 +317,8 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                    self.ui.imageThresholdSliderWidget.value, not self.ui.invertOutputCheckBox.checked, showResult=False)
    
     def onusebutton(self) -> None:
-        
-            self.isRobotLoaded = False
             
-            # Stop any prior streaming callbacks before we touch transforms
+            # Stop any prior streaming callbacks
             self.logic.removeObserver()
                 
             # Get robot node
@@ -314,6 +327,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                 print("Error: No robot selected.")
                 return
             
+            # Print selected robot name
             print("Selected Robot:", robotNode.GetName())
 
             # Extract URDF XML
@@ -329,14 +343,8 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                 print("Error: No links found in URDF.")
                 return
             
-            # Store robot and links
-            self.robot = robotNode
-            self.rootlink = alllink[0] 
-            self.tiplink = alllink[-1]
-            print(f"CURRENT: rootlink={self.rootlink}, tiplink={self.tiplink}")
-            
-            # Check if ghost tip link exists
-            ghost_name = self.tiplink + "_model_ghost"
+            # Check if ghost model exists, if so store ghost tip
+            ghost_name = alllink[-1] + "_model_ghost"
             try:
                 ghost_model = slicer.util.getNode(ghost_name)
                 ghost_loaded = ghost_model is not None and ghost_model.GetParentTransformNode() is not None
@@ -344,48 +352,36 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                     self.ghosttiplink = ghost_name
                     print(f"Ghost robot loaded: True")
                 else:
-                    self.ghosttiplink = None
-                    print(f"Ghost robot NOT loaded (no parent transform)")
+                    print(f"Ghost robot NOT loaded or Transform missing")
+                    return
             except slicer.util.MRMLNodeNotFoundException:
-                self.ghosttiplink = None
-                print(f"Ghost robot NOT loaded (model '{ghost_name}' not found)")
-            
-            print(f"Tip Link: {self.tiplink}, Ghost Tip Link: {self.ghosttiplink}")
-
-            # Check if links were found
-            if not self.rootlink or not self.tiplink:
-                print("Error: Could not auto-detect kinematic chain from URDF.")
+                print(f"Ghost robot NOT loaded")
                 return
-            print(f"Auto-detected Chain for IK: {self.rootlink} -> {self.tiplink}")
-            
+        
+            # Print current postiion
             currentjointpos =self.logic.getcurrentjointpositions(robotNode)
-            print(f"Current Joint Positions (rad): {[f'{j:.4f}' for j in currentjointpos]}")
-            
-            # Get joint names
+
+            # Get joint names & store initial joint positions
             joint_names = robotNode.GetJoints()
             self.logic.joint_names = joint_names
             self.logic.last_ik_solution = currentjointpos
             self.jointPositionsRad = [0.0] * len(joint_names)
+            self.robot = robotNode
+            self.rootlink = alllink[0] 
+            self.tiplink = alllink[-1]
             
-            # DEBUG: Confirm joint names and seed match
-            print(f"\n=== JOINT CONFIGURATION ===")
-            print(f"Joint Names: {list(joint_names)}")
-            print(f"Joint Count: {len(joint_names)}")
-            print(f"Seed Vector: {[f'{j:.4f}' for j in currentjointpos]}")
-            print(f"Seed Length: {len(currentjointpos)}")
-            print(f"Match: {len(joint_names) == len(currentjointpos)}")
-            print(f"All Seed Values in Radians? (should be near 0): {currentjointpos}")
-            print(f"===========================\n")
+            # Print results
+            print(f"CURRENT: rootlink={self.rootlink}, tiplink={self.tiplink}, ghosttiplink={self.ghosttiplink}")
+            print(f"Current Joint Positions (rad): {[f'{j:.4f}' for j in currentjointpos]}")
             
             # Enable buttons
-            self.ui.zeropushButton.enabled = True
             self.ui.appCollapsibleButton.collapsed = False
             self.ui.appCollapsibleButton.enabled = True
             
             # Check if /move_group node exists and ghost robot in ROS
             # if so enable MoveIt buttons
             is_running = ROS2TestsLogic.check_ros2_node_running("/move_group")
-            if is_running and self.ghosttiplink is not None:
+            if is_running:
                 self.ui.planbutton.enabled = True
                 self.ui.previewbutton.enabled = True
                 self.ui.checkBox.enabled = True
@@ -394,9 +390,11 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                 print(f"/move_group node is running")
                 print(f"User must enter planning group name before using MoveIt IK")
             else:
-                print(f"/move_group node is NOT running or no ghost robot loaded")
+                if not is_running:
+                    print(f"/move_group node is NOT running")
             
-            # Create Joint Sliders Dynamically
+            # Create Joint Sliders Dynamically (only if ghost model exists)
+            self.ui.zeropushButton.enabled = True
             limits = self.logic.parse_joint_limits_from_urdf(urdf_xml)
             container = self.ui.Jointtab.layout()
             if container is not None:
@@ -480,11 +478,9 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                     
                     # Add the whole block to your main container
                     container.addWidget(joint_block_widget)
-                    
-            self.isRobotLoaded = True
             
-            if self.ui.tabWidget.currentWidget() == self.ui.controltab:
-                self.enterControlMode()
+            # Set robot true
+            self.isRobotLoaded = True
 
     # Opacity button handler        
     def onopacitybutton(self) -> None:
@@ -509,7 +505,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # Update ghost robot transforms with new joint positions
         if self.logic is not None and self.robot is not None:
-            self.logic.updateGhostTransformsFromJoints(self.robot, self.jointPositionsRad)
+            self.logic.updateGhostTransformsFromJointsKDL(self.robot, self.jointPositionsRad)
         
         print(f"All joint values (rad): {[f'{j:.4f}' for j in self.jointPositionsRad]}")
     
@@ -564,7 +560,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # Update ghost robot with zero positions
         if self.logic is not None and self.robot is not None:
-            self.logic.updateGhostTransformsFromJoints(self.robot, self.jointPositionsRad)
+            self.logic.updateGhostTransformsFromJointsKDL(self.robot, self.jointPositionsRad)
             self.logic.last_ik_solution = self.jointPositionsRad.copy()
 
     def onMoveGroupToggled(self, toggled: bool) -> None:
@@ -755,7 +751,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                     # Show first point of trajectory
                     if self.robot and num_points > 0:
                         positions = trajectory['points'][0]['positions']
-                        self.logic.updateGhostTransformsFromJoints(self.robot, positions)
+                        self.logic.updateGhostTransformsFromJointsKDL(self.robot, positions)
                 else:
                     print("Error: No points found in trajectory")
             except json.JSONDecodeError as e:
@@ -793,7 +789,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         
         # Apply to ghost robot
         if self.robot:
-            self.logic.updateGhostTransformsFromJoints(self.robot, positions)
+            self.logic.updateGhostTransformsFromJointsKDL(self.robot, positions)
             print(f"Point {self.trajectoryIndex}/{len(self.trajectoryData['points'])-1}: {[f'{p:.3f}' for p in positions]}")
         
         self.trajectoryIndex += 1
@@ -813,7 +809,7 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             positions = point['positions']
             
             # Apply to ghost robot
-            self.logic.updateGhostTransformsFromJoints(self.robot, positions)
+            self.logic.updateGhostTransformsFromJointsKDL(self.robot, positions)
             
             # Update spinbox if it's not the source of the change
             if self.trajectorySpinBox.value != value:
@@ -832,11 +828,11 @@ class RoboDragWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     
 
 #
-# RoboDragLogic
+# MedicalRobotMotionPlannerLogic
 #
 
 
-class RoboDragLogic(ScriptedLoadableModuleLogic):
+class MedicalRobotMotionPlannerLogic(ScriptedLoadableModuleLogic):
     """This class should implement all the actual
     computation done by your module.  The interface
     should be such that other python code can import
@@ -861,7 +857,7 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
         self.useMoveItIK = False  # Flag to toggle between KDL and MoveIt IK
         
     def getParameterNode(self):
-        return RoboDragParameterNode(super().getParameterNode())
+        return MedicalRobotMotionPlannerParameterNode(super().getParameterNode())
 
     def process(self,
                 inputVolume: vtkMRMLScalarVolumeNode,
@@ -1033,12 +1029,12 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
         if self.obsNode and self.obsTag is not None:
             try:
                 self.obsNode.RemoveObserver(self.obsTag)
-                print(f"[RoboDragLogic] Removed observer (tag={self.obsTag}) from {self.obsNode.GetName()}")
+                print(f"[MedicalRobotMotionPlannerLogic] Removed observer (tag={self.obsTag}) from {self.obsNode.GetName()}")
             except Exception as e:
-                print(f"[RoboDragLogic] Error removing observer: {e}")
+                print(f"[MedicalRobotMotionPlannerLogic] Error removing observer: {e}")
         else:
             if self.obsTag is not None:
-                print(f"[RoboDragLogic] No obsNode to remove observer from (tag={self.obsTag})")
+                print(f"[MedicalRobotMotionPlannerLogic] No obsNode to remove observer from (tag={self.obsTag})")
         self.obsNode = None
         self.obsTag = None
         self.callback = None
@@ -1072,7 +1068,7 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
                 print(f"[IK] Joint Solution: {data}")
                 self.last_ik_solution = data
                 # Publish the joint state solution
-                self.updateGhostTransformsFromJoints(robotmodel, data)
+                self.updateGhostTransformsFromJointsKDL(robotmodel, data)
                 return data
 
             except ValueError as e:
@@ -1112,7 +1108,7 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
                     data = [float(x) for x in result_str.split(",")]
                     print(f"[IK] Solution found: {data}")
                     self.last_ik_solution = data
-                    self.updateGhostTransformsFromJoints(robotmodel, data)
+                    self.updateGhostTransformsFromJointsKDL(robotmodel, data)
                     return data
                 except ValueError as e:
                     print(f"[IK] Failed to parse solution: {e}")
@@ -1328,7 +1324,7 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
 
         if len(sliders) != len(limits_rad):
             print(
-                f"[RoboDrag] Slider count ({len(sliders)}) "
+                f"[MedicalRobotMotionPlanner] Slider count ({len(sliders)}) "
                 f"!= joint count ({len(limits_rad)})"
             )
 
@@ -1342,7 +1338,7 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
             slider.setRange(lo_deg, hi_deg)
             slider.setValue(0)
 
-            print(f"[RoboDrag] {jointName}: {lo_deg}..{hi_deg} deg")
+            print(f"[MedicalRobotMotionPlanner] {jointName}: {lo_deg}..{hi_deg} deg")
             
     def setIKSourceTransforms(self, fromtransformname, totransformname):
             """
@@ -1556,103 +1552,62 @@ class RoboDragLogic(ScriptedLoadableModuleLogic):
         
         return joint_positions
     
-    def updateGhostTransformsFromJoints(self, robotmodel, joint_values):
+    def updateGhostTransformsFromJointsKDL(self, robotmodel, joint_values):
         """
-        Update all ghost robot link transforms for a given set of joint values.
-        Uses the robot's ComputeLocalTransform C++ method to compute each link's
-        local transform relative to its parent, then applies it to the ghost transform nodes.
+        Update all ghost robot link transforms using KDL FK computation.
+        For each link, calls ComputeKDLFK to get the transform and applies it to the ghost link.
         
         Args:
             robotmodel: The robot model node with ComputeLocalTransform method
             joint_values: List of joint angles in radians
-        
-        Returns:
-            bool: True if successful, False otherwise
         """
-        if not robotmodel:
-            print("Error: No robot model provided")
+        if not robotmodel or not joint_values:
+            print("[updateGhostTransformsFromJointsKDL] No robot model or joint values")
             return False
         
-        if not joint_values:
-            print("Error: No joint values provided")
-            return False
+        seg = robotmodel.GetSegments()
         
-        # Get URDF to parse link hierarchy
-        pnode = robotmodel.GetNthNodeReference("parameter", 0)
-        if not pnode:
-            print("Error: No parameter node found for robot")
-            return False
-        urdf_xml = pnode.GetParameterAsString("robot_description")
-        
-        # Parse joint structure to get all child links
-        joint_info = self.parse_joint_structure_from_urdf(urdf_xml)
-        
-        # Get all link names from URDF
-        all_links = self.parse_all_link_names_from_urdf(urdf_xml)
-        
-        if not all_links:
-            print("Error: No links found in URDF")
-            return False
-        
-        # Identify child links (links that have a parent joint)
-        # Skip the root link since it has no parent joint
-        child_links = set()
-        for joint_name, joint_data in joint_info.items():
-            child_links.add(joint_data['child'])
-        
-        success_count = 0
-        
-        # For each link that has a parent joint, compute and apply its local transform
-        for link_name in all_links:
-            # Skip links that don't have a parent joint (e.g., root link)
-            if link_name not in child_links:
-                continue
-            
+        # For each link, compute FK and update ghost transform
+        for link_name in seg:
             try:
-                # Create a matrix to receive the computed transform
-                local_matrix = vtk.vtkMatrix4x4()
+                # Create a matrix to hold the FK result
+                fk_matrix = vtk.vtkMatrix4x4()
                 
-                # Call the C++ ComputeLocalTransform method
-                result = robotmodel.ComputeLocalTransform(joint_values, local_matrix, link_name)
+                # Call the C++ ComputeLocalTransform function
+                # It takes: joint_values (as list), output matrix, and link name
+                result = robotmodel.ComputeLocalTransform(joint_values, fk_matrix, link_name)
                 
-                if not result:
-                    print(f"Warning: ComputeLocalTransform failed for link '{link_name}'")
+                if result is None:
+                    print(f"[FK] Failed to compute FK for link '{link_name}'")
                     continue
                 
-                # Find the ghost transform node for this link
-                # Ghost links have "_ghost" suffix
-                ghost_model_name = f"{link_name}_model_ghost"
-                
+                # Find the ghost link's transform node
+                ghost_link_name = link_name + "_model_ghost"
                 try:
-                    ghost_transform = self.findRobotTransforms(ghost_model_name, ghost=True)
-                except RuntimeError as e:
-                    # Some links may not have visual models, skip them
-                    continue
-                
-                # Apply the computed local transform to the ghost transform node
-                ghost_transform.SetMatrixTransformToParent(local_matrix)
-                success_count += 1
-                
+                    ghost_model = slicer.util.getNode(ghost_link_name)
+                    if ghost_model:
+                        ghost_transform = ghost_model.GetParentTransformNode()
+                        if ghost_transform:
+                            # Apply the FK matrix to the ghost transform
+                            ghost_transform.SetMatrixTransformToParent(fk_matrix)
+                            print(fk_matrix)
+                            print(f"[FK] Updated ghost transform for '{link_name}'")
+                except:
+                    print(f"[FK] Could not find or update ghost model for '{link_name}'")
+                    
             except Exception as e:
-                print(f"Error updating ghost transform for link '{link_name}': {e}")
-                continue
+                print(f"[FK] Error computing FK for link '{link_name}': {e}")
         
-        print(f"[updateGhostTransforms] Updated {success_count}/{len(child_links)} ghost transforms")
-        return success_count > 0
- 
-    
-
-
-    
+        return True
         
 
 
 #
-# RoboDragTest
+# MedicalRobotMotionPlannerTest
 #
 
 
-class RoboDragTest(ScriptedLoadableModuleTest):
+class MedicalRobotMotionPlannerTest(ScriptedLoadableModuleTest):
     """
     This is the test case for your scripted module.
     Uses ScriptedLoadableModuleTest base class, available at:
@@ -1666,9 +1621,9 @@ class RoboDragTest(ScriptedLoadableModuleTest):
     def runTest(self):
         """Run as few or as many tests as needed here."""
         self.setUp()
-        self.test_RoboDrag1()
+        self.test_MedicalRobotMotionPlanner1()
 
-    def test_RoboDrag1(self):
+    def test_MedicalRobotMotionPlanner1(self):
         """Ideally you should have several levels of tests.  At the lowest level
         tests should exercise the functionality of the logic with different inputs
         (both valid and invalid).  At higher levels your tests should emulate the
@@ -1687,7 +1642,7 @@ class RoboDragTest(ScriptedLoadableModuleTest):
         import SampleData
 
         registerSampleData()
-        inputVolume = SampleData.downloadSample("RoboDrag1")
+        inputVolume = SampleData.downloadSample("MedicalRobotMotionPlanner1")
         self.delayDisplay("Loaded test data set")
 
         inputScalarRange = inputVolume.GetImageData().GetScalarRange()
@@ -1699,7 +1654,7 @@ class RoboDragTest(ScriptedLoadableModuleTest):
 
         # Test the module logic
 
-        logic = RoboDragLogic()
+        logic = MedicalRobotMotionPlannerLogic()
 
         # Test algorithm with non-inverted threshold
         logic.process(inputVolume, outputVolume, threshold, True)
